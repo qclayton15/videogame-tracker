@@ -1,31 +1,86 @@
-GAME RELEASE TRACKER — Install as an app
-========================================
+# 🎮 Game Release Tracker
 
-WHAT'S IN THIS FOLDER
-  index.html            the app
-  manifest.webmanifest  app name + icons (makes it installable)
-  sw.js                 offline support (service worker)
-  icon-192.png / 512    app icons
+A single-page web app for tracking upcoming video game releases — live countdowns, prices, editions, a budget, cross-device sync, and more. It installs as an app on your phone or desktop and works offline.
 
-USE IT RIGHT NOW (no install)
-  Double-click index.html to open it in your browser. Everything works
-  except "install to home screen" and offline mode, which need hosting.
+No build step, no dependencies. It's one self-contained `index.html` plus an icon, a web-app manifest, and a service worker.
 
-PUT IT ON YOUR PHONE / DESKTOP AS A REAL APP  (5 minutes, free)
-  A PWA has to be served from a web address (https). Easiest free way:
+---
 
-  1. Go to  https://app.netlify.com/drop
-  2. Drag THIS WHOLE FOLDER onto the page.
-  3. Netlify gives you a link like  https://your-name.netlify.app
-  4. Open that link on your phone:
-       • iPhone (Safari):  Share ▸ Add to Home Screen
-       • Android (Chrome): menu ⋮ ▸ Install app / Add to Home screen
-       • Desktop Chrome/Edge: install icon in the address bar
-  5. It now opens like a normal app, works offline, and keeps your games.
+## Features
 
-  (Any static host works too — GitHub Pages, Vercel, Cloudflare Pages.)
+**Tracking**
+- Live countdowns to each release, sorted by soonest.
+- A **Next up** hero banner, with a dynamic backdrop that themes the whole page to the next release — and follows whichever card you hover.
+- **Flexible release timing:** exact date, month, quarter, year, or **TBA**. Non-exact games show an estimated window instead of a fake countdown and sort accordingly (TBA drops to the end).
+- Released games get a confetti burst and auto-tuck into a collapsible **Released** section.
 
-NOTES
-  • Your added games and status picks are saved in that browser/app.
-  • "Find cover art" pulls the image from Wikipedia and needs internet
-    when you add a game; after that it's saved for offline use.
+**Your list**
+- **Add a game** with type-to-search suggestions from the web — picks the cover art, release date, platforms, and official link automatically. Add a price and you're done.
+- **Edit** any game (including the built-in ones) — dates, price, platforms, links, cover. Built-ins have a **Reset to default**. Games you add can be removed.
+- **Priority ★ ratings** — mark how excited you are and sort by "Most anticipated".
+- **Status** — mark each game Want / Pre-ordered / Got it; the **My list** filter shows just those.
+- **Editions** — add Standard / Deluxe / Collector's versions with prices; pick one per game and it drives the card price and your budget.
+
+**Money & buying**
+- **Budget** — games marked Want or Pre-ordered are totalled at the top, broken down by month (Free counts as $0).
+- **Buy** opens a store picker that sends you to the right storefront per platform: PlayStation Store, Microsoft/Xbox, Steam or Epic (PC), or the Nintendo eShop.
+- **Prices are validated** to US format ($X.XX / Free / TBA).
+
+**Extras**
+- **▶ Trailer** and **＋ Google Calendar** buttons on every card.
+- **Search, sort** (soonest / price / most anticipated) and **group by month**.
+- Built-in **☔ How to use** guide.
+
+**Sync & backup**
+- **Cross-device sync** via a free [JSONBin](https://jsonbin.io) key — set it up once, and a sync code carries it to your other devices. Changes sync in the background.
+- **Manual backup** (download a file or copy a code) that needs no account.
+
+**App**
+- Installable **PWA** — add to your home screen for a full-screen app with its own icon; works offline.
+- Auto-updating cache: when you re-deploy, the app refreshes to the new version on its own.
+
+---
+
+## Files
+
+| File | What it is |
+|------|-----------|
+| `index.html` | The entire app (HTML, CSS, JS, embedded cover art) |
+| `manifest.webmanifest` | App name + icons (makes it installable) |
+| `sw.js` | Service worker (offline support, auto-update) |
+| `icon-192.png`, `icon-512.png` | App icons |
+| `.nojekyll` | Tells GitHub Pages to serve the files as-is |
+
+---
+
+## Host it on GitHub Pages
+
+1. Create a new **public** repository (e.g. `videogame-tracker`).
+2. **Add file → Upload files**, and drag in the files from this folder (`index.html`, `sw.js`, `manifest.webmanifest`, both icons, `.nojekyll`). Keep them at the repo root — `index.html` must be at the top level.
+3. **Commit changes.**
+4. **Settings → Pages → Build and deployment:** Source = *Deploy from a branch*, Branch = `main`, folder = `/ (root)`. **Save.**
+5. Wait ~1 minute. Your site goes live at `https://<your-username>.github.io/<repo-name>/`.
+
+**To update later:** re-upload the changed file(s) to the repo — Pages redeploys automatically, and the app self-updates on next load.
+
+The app uses relative paths and requires HTTPS (which GitHub Pages provides), so it works under the repo subpath with no changes.
+
+---
+
+## Moving your data between devices or hosts
+
+Your games, edits, statuses, and ratings are stored in the browser, tied to the **exact web address** the app is served from. So a new URL (or a new device) starts empty. To carry your list over:
+
+- **Old site:** open **☁ Sync → Copy code** (or **Download backup file**).
+- **New site:** open **☁ Sync → Import**, paste the code (or load the file), **Apply**.
+
+Or, if you've turned on JSONBin sync, just **Connect with code** on the new site and it pulls everything.
+
+---
+
+## Notes
+
+- **Storage** is per-origin `localStorage`, so it's private to your browser at that URL. Clearing site data wipes it — keep a backup or use sync.
+- **Cover-art search** and **auto-fill** use Wikipedia's public API from your browser (no key). Adding a game needs a connection; once added, the cover is saved for offline use.
+- **Sync** uses JSONBin's free tier (10,000 requests/month — plenty for personal use). The manual backup always works without any account.
+- Everything runs client-side. There's no server and no tracking.
