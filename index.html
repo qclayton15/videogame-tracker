@@ -261,6 +261,8 @@
   .field input[type=text],.field input[type=date],.field input[type=url],.field input[type=month],.field input[type=number],.field select{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--stroke);
     color:var(--text);border-radius:11px;padding:12px 13px;font-size:.95rem;font-family:inherit;transition:.18s}
   .field select{cursor:pointer;font-weight:600}
+  /* make native dropdown option lists readable (dark bg + light text) */
+  select option,select optgroup{background:#161826;color:#eef1f8}
   .field input:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(139,123,255,.22)}
   .countdown.approx .cd{background:rgba(139,123,255,.1);border-color:rgba(139,123,255,.3)}
   .countdown.approx .num{font-size:1.05rem;background:linear-gradient(90deg,var(--accent2),#a48bff);-webkit-background-clip:text;background-clip:text;color:transparent}
